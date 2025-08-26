@@ -1,0 +1,23 @@
+<div class="flex flex-column align-items-center justify-content-center h-screen">
+    @if (confirmationStatus === "loading") {
+        <p-card class="text-center shadow-lg radius">
+            <i class="pi pi-spin pi-spinner text-blue-500 text-5xl mb-4"></i>
+            <h2>Confirmation in progress...</h2>
+            <p>Please wait while we confirm your account.</p>
+        </p-card>
+    } @else if (confirmationStatus === "success") {
+        <p-card class="text-center shadow-lg radius">
+            <i class="pi pi-check-circle text-green-500 text-5xl mb-4"></i>
+            <h2>Account Confirmed!</h2>
+            <p>Your account has been successfully activated. Redirecting to the login page...</p>
+            <p-progressBar mode="indeterminate"></p-progressBar>
+        </p-card>
+    } @else {
+        <p-card class="text-center shadow-lg radius">
+            <i class="pi pi-times-circle text-red-500 text-5xl mb-4"></i>
+            <h2>Confirmation Failed</h2>
+            <p>The confirmation link is invalid or has expired.</p>
+            <p-button label="Back to Home" icon="pi pi-home" [routerLink]="['/']"></p-button>
+        </p-card>
+    }
+</div>

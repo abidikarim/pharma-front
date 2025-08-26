@@ -1,0 +1,27 @@
+.not-found-container {
+  height: 80vh;
+  flex-direction: column;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  border-radius: 12px;
+  margin: 2rem;
+  padding: 2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 3rem;
+  color: #333;
+}
+
+p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+button.p-button {
+  font-family: 'Poppins', sans-serif;
+  background-color: #007ad9;
+  border: none;
+}

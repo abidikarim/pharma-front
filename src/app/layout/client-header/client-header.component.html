@@ -1,0 +1,54 @@
+<p-menubar [model]="items" styleClass="shadow-1" [style]="{ position: 'sticky', top: '0', zIndex: '999' }">
+  <ng-template pTemplate="start">
+    <img src="/logo.png" height="50" width="100" alt="Logo" class="border-round-sm hidden md:block" />
+  </ng-template>
+  <ng-template pTemplate="end">
+    @if(!isLoggedIn){
+    <p-button label="Login / Register" styleClass="p-button-text" (click)="authDialog.openDialog()"></p-button>
+    }
+    @if(isLoggedIn){
+    <p-button #userBtn type="button" icon="pi pi-user" styleClass="p-button-rounded p-button-text"
+      (click)="userMenu.toggle($event)"></p-button>
+    <p-menu #userMenu [popup]="true" [model]="userItems" appendTo="body"></p-menu>
+    }
+    <p-button icon="pi pi-shopping-cart" styleClass="p-button-rounded p-button-text" 
+      badgeSeverity="warn" (click)="cartVisible = true"  badge="{{ cartItems.length }}"></p-button>
+  </ng-template>
+</p-menubar>
+<app-auth #authDialog></app-auth>
+<p-dialog [(visible)]="cartVisible" [modal]="true" [closable]="true" [dismissableMask]="true" [draggable]="false"
+  [resizable]="false" header="Your Cart" styleClass="w-full lg:w-6">
+
+  @if (cartItems.length > 0) {
+  @for (item of cartItems; track $index) {
+  <div class="flex justify-content-between align-items-center py-2 border-bottom-1">
+    <div>{{ item.name }}</div>
+    <div class="flex align-items-center gap-2">
+      <p-inputNumber [(ngModel)]="item.quantity" [min]="0.1" [step]="0.1" mode="decimal" [minFractionDigits]="1"
+        [maxFractionDigits]="2" (onInput)="updateQuantity(item)">
+      </p-inputNumber>
+      <p-button icon="pi pi-trash" styleClass="p-button-rounded p-button-sm p-button-danger" (click)="removeItem(item)">
+      </p-button>
+    </div>
+  </div>
+  }
+  <div class="mt-3 text-right font-bold">
+  <div>Total: {{ totalPrice | currency:'EUR':'symbol':'1.2-2' }}</div>
+  <div class="text-sm text-color-secondary">
+    ≈ {{ (totalPrice * (btcRate || 0)) | number:'1.6-6' }} ₿
+  </div>
+</div>
+  } @else {
+  <p class="text-center text-gray-500">Your cart is empty.</p>
+  }
+  <ng-template pTemplate="footer">
+   <div class="w-full  flex flex-column sm:flex-row gap-4 justify-content-center align-items-center">
+     <p-button label="Clear Cart" icon="pi pi-trash" styleClass="p-button-danger mr-2"
+      [disabled]="cartItems.length === 0" (click)="clearCart()"></p-button>
+    <p-button label="Checkout" icon="pi pi-credit-card" styleClass="p-button-success mr-2"
+      [disabled]="cartItems.length === 0"></p-button>
+    <p-button label="Continue Shopping" icon="pi pi-arrow-left" styleClass="p-button-text"
+      (click)="cartVisible=false"></p-button>
+   </div>
+  </ng-template>
+</p-dialog>

@@ -1,0 +1,89 @@
+<p-dialog [(visible)]="visible" [modal]="true" [style]="{width: '400px'}" header="Authentication" [closable]="true">
+    <p-tabView [(activeIndex)]="activeIndex">
+
+        <!-- LOGIN TAB -->
+        <p-tabPanel header="Login">
+            <form [formGroup]="loginForm" class="flex flex-column gap-4 mt-5">
+                <div>
+                    <p-floatlabel>
+                        <input pInputText id="login-email" class="w-full" formControlName="email" />
+                        <label for="login-email">Email</label>
+                    </p-floatlabel>
+                    <app-form-error [control]="loginForm.get('email')"></app-form-error>
+                </div>
+                <div>
+                    <p-floatlabel>
+                        <p-password id="login-password" [feedback]="false" inputStyleClass="w-full" styleClass="w-full"
+                            toggleMask="true" formControlName="password"></p-password>
+                        <label for="login-password">Password</label>
+                    </p-floatlabel>
+                    <app-form-error [control]="loginForm.get('password')"></app-form-error>
+                </div>
+                <p-button label="Login" icon="pi pi-sign-in" styleClass="w-full"  type="button"(click)="login()" [loading]="loading"></p-button>
+            </form>
+        </p-tabPanel>
+
+        <!-- REGISTER TAB -->
+        <p-tabPanel header="Register">
+            <form [formGroup]="registerForm" class="flex flex-column gap-4 mt-5">
+                <div>
+                    <p-floatlabel>
+                        <input pInputText id="first-name" class="w-full" formControlName="first_name" />
+                        <label for="first-name">First Name</label>
+                    </p-floatlabel>
+                    <app-form-error [control]="registerForm.get('first_name')"></app-form-error>
+                </div>
+
+                <div>
+                    <p-floatlabel>
+                        <input pInputText id="last-name" class="w-full" formControlName="last_name" />
+                        <label for="last-name">Last Name</label>
+                    </p-floatlabel>
+                    <app-form-error [control]="registerForm.get('last_name')"></app-form-error>
+                </div>
+
+                <div>
+                    <p-floatlabel>
+                        <input pInputText id="register-email" class="w-full" formControlName="email" />
+                        <label for="register-email">Email</label>
+                    </p-floatlabel>
+                    <app-form-error [control]="registerForm.get('email')"></app-form-error>
+                </div>
+
+                <div>
+                    <p-floatlabel>
+                        <p-password id="register-password" [feedback]="false" inputStyleClass="w-full"
+                            styleClass="w-full" toggleMask="true" formControlName="password" ></p-password>
+                        <label for="register-password">Password</label>
+                    </p-floatlabel>
+                    <app-form-error [control]="registerForm.get('password')"></app-form-error>
+                </div>
+                <div>
+                    <p-floatlabel>
+                        <p-password id="confirm-password" [feedback]="false" inputStyleClass="w-full"
+                            styleClass="w-full" toggleMask="true" formControlName="confirm_password" ></p-password>
+                        <label for="confirm-password">Confirm Password</label>
+                    </p-floatlabel>
+                     <app-form-error [form]="registerForm" errorKey="passwordsMismatch"></app-form-error>
+                     <app-form-error [control]="registerForm.get('confirm_password')"></app-form-error>
+                </div>
+                <p-button label="Register" icon="pi pi-user-plus" styleClass="w-full" type="button" (click)="register()" [loading]="loading"></p-button>
+            </form>
+        </p-tabPanel>
+
+        <!-- FORGOT PASSWORD TAB -->
+        <p-tabPanel header="Forgot Password">
+            <form [formGroup]="resetEmailForm" class="flex flex-column gap-4 mt-5">
+                <div>
+                    <p-floatlabel>
+                        <input pInputText id="forgot-email" class="w-full" formControlName="email"/>
+                        <label for="forgot-email">Email</label>
+                    </p-floatlabel>
+                     <app-form-error [control]="resetEmailForm.get('email')"></app-form-error>
+                </div>
+                <p-button label="Send Reset Email" icon="pi pi-envelope" styleClass="w-full" type="button" (click)="sendResetEmail()" [loading]="loading"></p-button>
+            </form>
+        </p-tabPanel>
+
+    </p-tabView>
+</p-dialog>

@@ -1,0 +1,49 @@
+<div class="grid p-4 gap-4 justify-content-center sticky top-0 left-0">
+  <div *ngFor="let category of categories" class="col-12 md:col-5">
+    <p-card class="shadow-2 border-round-lg overflow-hidden">
+      <div class="relative">
+        <p-image [src]="category.image_link" alt="{{category.name}}"
+          imageClass="w-full h-18rem object-cover border-round-top-lg" />
+        <div class="absolute bottom-0 left-0 w-full bg-black-alpha-70 text-white p-2">
+          <h3 class="m-0 text-lg font-bold">{{ category.name }}</h3>
+          <p class="m-0 text-sm">{{ category.description }}</p>
+        </div>
+      </div>
+      <div class="mt-3 text-center">
+        <p-button label="View Products" icon="pi pi-eye" styleClass="p-button-rounded p-button-sm"
+          (click)="selectedCategory = category">
+        </p-button>
+      </div>
+    </p-card>
+  </div>
+</div>
+
+<!-- Product List Dialog -->
+<p-dialog header="{{selectedCategory?.name}}" [(visible)]="selectedCategory" [modal]="true" [style]="{width: '40rem'}">
+  <div *ngFor="let product of selectedCategory?.products"
+    class="flex flex-column py-2 border-bottom-1 border-gray-200 gap-2">
+
+    <div class="flex justify-content-between align-items-center">
+      <div>
+        <h4 class="m-0">{{ product.name }}</h4>
+        <p class="m-0 text-sm text-gray-500">
+          Unit Price: {{ product.unit_price | currency:'EUR':'symbol':'1.2-2' }}
+          (~{{ (product.unit_price * btcRate) | number:'1.6-6' }} ₿/g)
+        </p>
+      </div>
+      <div class="flex align-items-center gap-2">
+        <p-inputNumber [(ngModel)]="product.quantity" [min]="0.1" [step]="0.1" mode="decimal" [minFractionDigits]="1"
+          [maxFractionDigits]="2" suffix=" g" inputStyleClass="w-6rem" placeholder="Qty">
+        </p-inputNumber>
+        <p-button icon="pi pi-cart-plus" styleClass="p-button-rounded p-button-sm" (click)="addToCart(product)">
+        </p-button>
+      </div>
+    </div>
+
+    <!-- Total price -->
+    <div class="text-right text-sm text-gray-700">
+      Total: {{ (product.unit_price * (product.quantity || 0)) | currency:'EUR':'symbol':'1.2-2' }}
+      (~{{ ((product.unit_price * (product.quantity || 0)) * btcRate) | number:'1.6-6' }} ₿)
+    </div>
+  </div>
+</p-dialog>

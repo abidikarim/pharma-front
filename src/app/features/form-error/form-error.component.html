@@ -1,0 +1,5 @@
+<small class="text-red-500" *ngIf="hasError()">
+      <ng-container *ngFor="let key of errorKeys()">
+        <span *ngIf="getErrorMessage(key)">{{ getErrorMessage(key) }}</span>
+      </ng-container>
+    </small>
